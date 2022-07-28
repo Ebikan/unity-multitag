@@ -98,7 +98,7 @@ public static class Multitag
             List<GameObject> inRangeObjects = new List<GameObject>();
             foreach (var obj in objects)
             {
-                if (Vector3.SqrMagnitude(origin - obj.transform.position) < maxDistSq)
+                if (Vector3.SqrMagnitude(origin - obj.transform.position) <= maxDistSq)
                 {
                     inRangeObjects.Add(obj);
                 }
