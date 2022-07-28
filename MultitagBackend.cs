@@ -84,6 +84,33 @@ public static class Multitag
     }
 
     /// <summary>
+    /// Returns every gameobject containing a specific tag within range of a specified origin point.
+    /// If none are found, returns an empty list.
+    /// </summary>
+    /// <param name="tag">Tag the objects must all contain.</param>
+    /// <param name="origin">The point of origin for the range calculation.</param>
+    /// <param name="maxDistance">The max distance that is used to determine whether the object is in range.</param>
+    public static List<GameObject> FindGameObjectsWithTagInRange(string tag, Vector3 origin, float maxDistance)
+    {
+        if (objectStore.TryGetValue(tag, out var objects))
+        {
+            float maxDistSq = maxDistance * maxDistance;
+            List<GameObject> inRangeObjects = new List<GameObject>();
+            foreach (var obj in objects)
+            {
+                if (Vector3.SqrMagnitude(origin - obj.transform.position) < maxDistSq)
+                {
+                    inRangeObjects.Add(obj);
+                }
+            }
+            return inRangeObjects;
+        }
+
+        return new List<GameObject>();
+    }
+
+
+    /// <summary>
     /// Returns all the tags (if any) attached to a game object.
     /// Will not be valid prior to Start().
     /// </summary>
